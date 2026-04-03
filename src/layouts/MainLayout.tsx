@@ -1,5 +1,5 @@
 import { Box, Flex, VStack, Text, Heading, Link } from "@chakra-ui/react";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface LayoutProps {
   children: ReactNode; // The "View" we are currently looking at
