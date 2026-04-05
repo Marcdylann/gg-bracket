@@ -1,31 +1,41 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, VStack } from "@chakra-ui/react";
+import { Tabs, Stack } from "@chakra-ui/react";
+import MobileMatchCard from "./MobileMatchCard";
+import type { Match } from "../types";
 
-const MobileMatchList = ({ matches }) => {
-  // Helper function to filter matches by round number
-  const getMatchesByRound = (roundNumber) => 
-    matches.filter(m => m.round === roundNumber);
+interface MobileMatchListProps {
+  matches: Match[];
+}
 
-  const roundLabels = ["Round 1", "Quarters", "Semis", "Finals"];
+const MobileMatchList = ({ matches }: MobileMatchListProps) => {
+  const getMatchesByRound = (round: number) => matches.filter((m) => m.round === round);
+  const roundTabs = [
+    { value: "1", label: "R1" },
+    { value: "2", label: "QF" },
+    { value: "3", label: "SF" },
+    { value: "4", label: "Final" },
+  ];
 
   return (
-    <Tabs isFitted variant="soft-rounded" colorScheme="blue">
-      <TabList bg="gray.50" p={2} borderRadius="full" mb={6}>
-        {roundLabels.map((label) => (
-          <Tab key={label} fontSize="sm">{label}</Tab>
+    <Tabs.Root defaultValue="1" variant="enclosed" fitted>
+      <Tabs.List mb="4">
+        {roundTabs.map((tab) => (
+          <Tabs.Trigger key={tab.value} value={tab.value}>
+            {tab.label}
+          </Tabs.Trigger>
         ))}
-      </TabList>
+      </Tabs.List>
 
-      <TabPanels>
-        {[1, 2, 3, 4].map((roundNum) => (
-          <TabPanel key={roundNum} p={0}>
-            <VStack spacing={4}>
-              {getMatchesByRound(roundNum).map((match) => (
-                <MobileMatchCard key={match.id} {...match} />
-              ))}
-            </VStack>
-          </TabPanel>
-        ))}
-      </TabPanels>
-    </Tabs>
+      {roundTabs.map((tab) => (
+        <Tabs.Content key={tab.value} value={tab.value}>
+          <Stack gap="4">
+            {getMatchesByRound(parseInt(tab.value)).map((m) => (
+              <MobileMatchCard key={m.id} {...m} />
+            ))}
+          </Stack>
+        </Tabs.Content>
+      ))}
+    </Tabs.Root>
   );
 };
+
+export default MobileMatchList;

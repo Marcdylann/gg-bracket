@@ -1,58 +1,49 @@
-import { Box, Flex, Text, Badge, VStack, Divider } from "@chakra-ui/react";
+import { Box, Flex, Text, Badge, Stack, Separator } from "@chakra-ui/react";
+import type { Match } from "../types";
 
-const MobileMatchCard = ({ teamA, teamB, scoreA, scoreB, status }) => {
-  // Logic to highlight the winner if the match is finished
+const MobileMatchCard = ({ teamA, teamB, scoreA, scoreB, status }: Match) => {
   const isFinal = status === "Final";
   const winnerA = isFinal && scoreA > scoreB;
   const winnerB = isFinal && scoreB > scoreA;
 
   return (
     <Box
-      p={4}
+      p="4"
       borderWidth="1px"
       borderRadius="xl"
       bg="white"
-      boxShadow="sm"
       width="100%"
-      borderLeft="4px solid"
-      borderLeftColor={status === "Live" ? "red.400" : "blue.400"}
+      borderLeftWidth="4px"
+      borderLeftColor={status === "Live" ? "red.500" : "blue.500"}
     >
-      <Flex justify="space-between" align="center" mb={3}>
-        <Badge variant="subtle" colorScheme={status === "Live" ? "red" : "gray"}>
+      <Flex justify="space-between" align="center" mb="3">
+        <Badge colorPalette={status === "Live" ? "red" : "blue"} variant="solid">
           {status}
         </Badge>
-        <Text fontSize="xs" fontWeight="bold" color="gray.400" uppercase>
-          Scoreboard
+        <Text fontSize="xs" fontWeight="bold" color="gray.500" textTransform="uppercase">
+          Match Score
         </Text>
       </Flex>
 
-      <VStack align="stretch" spacing={3}>
-        {/* Team A Row */}
+      <Stack gap="3">
         <Flex justify="space-between" align="center">
-          <Text 
-            fontWeight={winnerA ? "bold" : "medium"} 
-            color={winnerA ? "blue.600" : "gray.700"}
-            fontSize="lg"
-          >
+          <Text fontWeight={winnerA ? "bold" : "medium"} fontSize="md" color="gray.800">
             {teamA}
           </Text>
           <Text fontWeight="bold" fontSize="lg">{scoreA}</Text>
         </Flex>
 
-        <Divider />
+        <Separator />
 
-        {/* Team B Row */}
         <Flex justify="space-between" align="center">
-          <Text 
-            fontWeight={winnerB ? "bold" : "medium"} 
-            color={winnerB ? "blue.600" : "gray.700"}
-            fontSize="lg"
-          >
+          <Text fontWeight={winnerB ? "bold" : "medium"} fontSize="md" color="gray.800">
             {teamB}
           </Text>
           <Text fontWeight="bold" fontSize="lg">{scoreB}</Text>
         </Flex>
-      </VStack>
+      </Stack>
     </Box>
   );
 };
+
+export default MobileMatchCard;

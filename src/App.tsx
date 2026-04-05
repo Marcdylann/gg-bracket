@@ -1,22 +1,11 @@
-import { useState } from "react";
-import { MainLayout } from "./layouts/MainLayout";
-import { Box, Heading } from "@chakra-ui/react";
-import TournamentList from "./views/TournamentList"; 
-import VisualBracket from "./views/VisualBracket";
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import TournamentDashboard from "./features/tournament/TournamentDashboard";
 
 function App() {
-  const [activeView, setActiveView] = useState<"list" | "bracket">("list");
-
   return (
-    <MainLayout onViewChange={setActiveView}>
-      {activeView === "list" ? (
-        <TournamentList />
-      ) : (
-        <VisualBracket/>
-      )}
-      
-    </MainLayout>
-    
+    <ChakraProvider value={defaultSystem}>
+      <TournamentDashboard />
+    </ChakraProvider>
   );
 }
 
