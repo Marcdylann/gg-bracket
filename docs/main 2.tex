@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{amssymb} % For \checkmark
+
+% Setup for code listings (Safe ASCII version)
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!5},
+    columns=fullflexible,
+    keepspaces=true
+}
+
+\title{Technical Handover Document: GG-Bracket}
+\author{Marc Dylan Myles C. Pilapil}
+\date{April 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Project Overview}
+\textbf{GG-Bracket} is a full-stack tournament management system designed with Role-Based Access Control (RBAC). The platform facilitates two distinct user experiences:
+\begin{itemize}
+    \item \textbf{Admins:} Authorized personnel capable of CRUD operations on teams and match scores.
+    \item \textbf{Viewers:} Public users with read-only access to standings and the visual bracket.
+\end{itemize}
+
+\section{System Architecture}
+The system utilizes a 3-tier architecture to decouple the presentation layer from the data persistence layer.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Layer} & \textbf{Technology} & \textbf{Responsibility} \\ \midrule
+Frontend & React + Chakra UI v3 & Responsive UI \& State Management \\
+Backend & Node.js + Express & API Routing \& JWT Authentication \\
+Database & PostgreSQL 18 & Persistent Relational Storage \\ \bottomrule
+\end{tabular}
+\caption{Technology Stack Breakdown}
+\end{table}
+
+\newpage % Force a fresh start if the previous page was getting crowded
+\begin{minipage}{\textwidth}
+\section{Project Skeleton}
+% Using standard ASCII |, -, and + for the tree
+\begin{lstlisting}
+GG-Bracket/
+|-- client/                # React Frontend
+|   |-- src/
+|   |   |-- api/           # Backend communication
+|   |   |-- context/       # Auth & Role state
+|   |   |-- features/      # Tournament & Bracket logic
+|   |   `-- App.tsx        # Main routing
+|-- server/                # Node.js Backend
+|   |-- config/            # DB Connection (db.js)
+|   |-- controllers/       # Auth & Match logic
+|   |-- middleware/        # JWT & Admin verification
+|   |-- routes/            # API Endpoints
+|   `-- index.js           # Entry point
+`-- .env                   # Environment secrets
+\end{lstlisting}
+\end{minipage}
+
+\section{Database Schema}
+The relational schema ensures data integrity using primary and foreign keys.
+\begin{itemize}
+    \item \textbf{users:} Contains username, email, password\_hash, and role.
+    \item \textbf{teams:} Contains team metadata and logo\_url.
+    \item \textbf{matches:} Tracks scores, rounds, and references the teams table.
+\end{itemize}
+
+\section{Current Development Status}
+\begin{itemize}
+    \item \textbf{UI/UX:} Done $\checkmark$
+    \item \textbf{Database:} Done $\checkmark$
+    \item \textbf{Auth Logic:} In Progress
+\end{itemize}
+
+\end{document}
