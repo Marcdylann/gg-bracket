@@ -1,11 +1,20 @@
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
-import TournamentDashboard from "./features/tournament/TournamentDashboard";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Login } from './features/auth/Login';
+import { AuthProvider } from './context/AuthContext'; // Make sure this is here!
 
 function App() {
   return (
-    <ChakraProvider value={defaultSystem}>
-      <TournamentDashboard />
-    </ChakraProvider>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* This is the "Doorway" to your login page */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* Your main bracket/home page route */}
+          <Route path="/" element={<div>Your Bracket UI Here</div>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
