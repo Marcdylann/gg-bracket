@@ -1,5 +1,5 @@
 import { Table, Badge, Heading, Box } from "@chakra-ui/react";
-import { tournaments } from "../data/mockData"; 
+import { tournaments } from "../data/mockData";
 
 const TournamentList = () => {
   return (

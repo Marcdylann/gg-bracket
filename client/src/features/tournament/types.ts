@@ -1,6 +1,4 @@
-export const TYPE_CHECK = true; 
-
-export interface Match {
+export type Match = {
   id: number;
   round: number;
   teamA: string;
@@ -8,4 +6,4 @@ export interface Match {
   scoreA: number;
   scoreB: number;
   status: "Live" | "Scheduled" | "Final";
-}
+};
