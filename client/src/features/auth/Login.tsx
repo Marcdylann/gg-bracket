@@ -1,19 +1,25 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { Box, Button, Input, Field, Heading, Stack, Container, Text } from "@chakra-ui/react"
 
 export const Login = () => {
+  // 1. DECLARE YOUR STATE (These are the "missing names" from your error)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  
+  // 2. INITIALIZE YOUR HOOKS
   const { login } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError("") // Clear previous errors
+    setError("") // Now 'setError' exists!
+    
     try {
-      await login(email, password)
-      // If successful, the AuthContext updates and the user is logged in
+      await login(email, password) // Now 'login', 'email', and 'password' exist!
+      navigate("/")
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed. Please try again.")
     }
@@ -25,6 +31,7 @@ export const Login = () => {
         <Stack gap="6">
           <Heading size="xl" textAlign="center">Admin Login</Heading>
           
+          {/* Now 'error' exists for this check */}
           {error && <Text color="red.500" fontSize="sm" textAlign="center">{error}</Text>}
 
           <form onSubmit={handleSubmit}>
