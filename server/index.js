@@ -1,9 +1,2 @@
-// ... existing imports ...
-const authRoutes = require('./routes/authRoutes');
-
-// ... existing middleware (app.use(cors), etc.) ...
-
-// Add the Auth Routes
-app.use('/api/auth', authRoutes);
-
-// ... app.listen ...
+const teamRoutes = require('./routes/teamRoutes');
+app.use('/api/teams', teamRoutes);
