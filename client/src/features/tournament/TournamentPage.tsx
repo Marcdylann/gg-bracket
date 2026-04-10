@@ -20,7 +20,7 @@ const TournamentPage = () => {
     <Box>
       <Text fontSize="2xl" fontWeight="bold">Teams ({teams.length})</Text>
       {teams.map(team => (
-        <TeamCard key={team.id} name={team.name} logo_url={team.logo_url}/>
+        <TeamCard key={team.id} name={team.name} logo_url={team.logo_url} />
       ))}
 
       <Text fontSize="2xl" fontWeight="bold" mt={6}>Matches</Text>

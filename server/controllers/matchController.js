@@ -13,8 +13,8 @@ const getAllMatches = async (req, res) => {
     t1.name AS team1_name,
     t2.name AS team2_name
   FROM matches m
-  JOIN teams t1 ON m.team_a_id = t1.id
-  JOIN teams t2 ON m.team_b_id = t2.id
+  LEFT JOIN teams t1 ON m.team_a_id = t1.id
+  LEFT JOIN teams t2 ON m.team_b_id = t2.id
   ORDER BY m.round ASC
 `);
     res.json(result.rows);
