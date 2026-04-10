@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './features/auth/Login';
 import { AuthProvider } from './context/AuthContext'; // Make sure this is here!
+import TournamentPage from './features/tournament/TournamentPage'
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           
           {/* Your main bracket/home page route */}
-          <Route path="/" element={<div>Your Bracket UI Here</div>} />
+          <Route path="/" element={<TournamentPage />} />
         </Routes>
       </Router>
     </AuthProvider>
