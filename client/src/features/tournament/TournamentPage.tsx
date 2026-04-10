@@ -1,6 +1,8 @@
 import { Box, Text, Spinner } from '@chakra-ui/react';
 import useTeams from '../../hooks/useTeams';
 import useMatches from '../../hooks/useMatches';
+import TeamCard from './TeamCard';
+import BracketView from './BracketView';
 
 const TournamentPage = () => {
   const { teams, isLoading: teamsLoading, error: teamsError } = useTeams();
@@ -18,15 +20,11 @@ const TournamentPage = () => {
     <Box>
       <Text fontSize="2xl" fontWeight="bold">Teams ({teams.length})</Text>
       {teams.map(team => (
-        <Text key={team.id}>{team.name}</Text>
+        <TeamCard key={team.id} name={team.name} logo_url={team.logo_url}/>
       ))}
 
       <Text fontSize="2xl" fontWeight="bold" mt={6}>Matches</Text>
-      {matches.map(match => (
-        <Text key={match.id}>
-          Round {match.round}: {match.team1_name} vs {match.team2_name} — {match.status}
-        </Text>
-      ))}
+      <BracketView matches={matches} />
     </Box>
   );
 };
