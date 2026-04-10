@@ -1,4 +1,4 @@
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, Separator } from "@chakra-ui/react";
 import { Match } from "../../types";
 
 interface BracketViewProps {
@@ -10,23 +10,25 @@ const BracketView = ({ matches }: BracketViewProps) => {
   const roundTwo = matches.filter((matches) => matches.round === 2);
 
   return (
-    <Flex>
+    <Flex gap = "8">
       <Box>
         <Text>Semi Finals</Text>
         {roundOne.map((match) => (
-          <Text key={match.id}>
-            {" "}
-            Round: {match.round} {match.team1_name} vs {match.team2_name}{" "}
-          </Text>
+          <Box key={match.id} border ="1px solid gray" borderRadius="md" p={4} mb={4} minW="150px">
+            <Text>{match.team1_name}</Text>
+            <Separator/>
+            <Text>{match.team2_name}</Text>
+          </Box>
         ))}
       </Box>
       <Box>
         <Text>Final</Text>
         {roundTwo.map((match) => (
-          <Text key={match.id}>
-            {" "}
-            Round: {match.round} {match.team1_name} vs {match.team2_name}
-          </Text>
+          <Box key={match.id} border ="1px solid gray" borderRadius="md" p={4} mb={4} minW="150px">
+            <Text>{match.team1_name}</Text>
+            <Separator/>
+            <Text>{match.team2_name}</Text>
+          </Box>
         ))}
       </Box>
     </Flex>
