@@ -1,4 +1,12 @@
-import { Box, Text, Flex, Separator, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Flex,
+  Separator,
+  Button,
+  Dialog,
+  Input,
+} from "@chakra-ui/react";
 import { Match } from "../../types";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
@@ -13,6 +21,9 @@ const BracketView = ({ matches }: BracketViewProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
+
+  const [scoreA, setScoreA] = useState('');
+  const [scoreB, setScoreB] = useState('');
 
   const { user } = useAuth();
 
@@ -78,15 +89,34 @@ const BracketView = ({ matches }: BracketViewProps) => {
           ))}
         </Box>
       </Flex>
-      {isOpen && selectedMatch && (
-        <Box>
-          <Text>Edit Score</Text>
-          <Text>
-            {selectedMatch.team1_name} vs {selectedMatch.team2_name}
-          </Text>
-          <Button onClick={() => setIsOpen(false)}>Close</Button>
-        </Box>
-      )}
+      <Dialog.Root open={isOpen} onOpenChange={() => setIsOpen(false)}>
+        <Dialog.Backdrop />
+        <Dialog.Positioner>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Text>Edit Score</Text>
+            </Dialog.Header>
+            <Dialog.Body>
+              <Text>
+                {selectedMatch?.team1_name} vs {selectedMatch?.team2_name}
+              </Text>
+              <Input
+                value={scoreA}
+                onChange={(e) => setScoreA(e.target.value)}
+                placeholder={`${selectedMatch?.team1_name} score`}
+                type="number"
+              />
+              <Input
+                value={scoreB}
+                onChange={(e) => setScoreB(e.target.value)}
+                placeholder={`${selectedMatch?.team2_name} score`}
+                type="number"
+              />
+              <Button>Submit</Button>
+            </Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Dialog.Root>
     </>
   );
 };
