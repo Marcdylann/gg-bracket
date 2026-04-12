@@ -1,4 +1,4 @@
-const pool = require('../config/db');
+const pool = require("../config/db");
 
 // GET /api/matches
 const getAllMatches = async (req, res) => {
@@ -19,9 +19,27 @@ const getAllMatches = async (req, res) => {
 `);
     res.json(result.rows);
   } catch (error) {
-    console.error('Error fetching matches:', error);
-    res.status(500).json({ message: 'Server error fetching matches' });
+    console.error("Error fetching matches:", error);
+    res.status(500).json({ message: "Server error fetching matches" });
   }
 };
 
-module.exports = { getAllMatches };
+const updateScore = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+  
+    const { scoreA, scoreB } = req.body;
+
+    const result = await pool.query(
+      "UPDATE matches SET score_team_a = $1, score_team_b = $2 WHERE id = $3",
+      [scoreA, scoreB, id],
+    );
+    res.json({ message: 'Score updated' })
+  } catch (error) {
+    console.error('Error updating scores:', error);
+    res.status(500).json({ message: 'Server error updating scores' });
+  }
+};
+
+module.exports = { getAllMatches, updateScore };
