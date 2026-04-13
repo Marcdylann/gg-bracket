@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAllMatches } = require('../controllers/matchController');
+const { getAllMatches, updateScore } = require('../controllers/matchController');
 const { protect } = require('../middleware/authMiddleware');
 
-// Public route — viewers can see matches
+
+router.put('/:id', protect, updateScore);
 router.get('/', getAllMatches);
 
 module.exports = router;

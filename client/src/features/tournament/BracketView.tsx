@@ -10,6 +10,7 @@ import {
 import { Match } from "../../types";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
+import api from '../../api/axios';
 
 interface BracketViewProps {
   matches: Match[];
@@ -25,7 +26,19 @@ const BracketView = ({ matches }: BracketViewProps) => {
   const [scoreA, setScoreA] = useState('');
   const [scoreB, setScoreB] = useState('');
 
+  const [scoreUpdated,  setScoreUpdated] = useState(false);
+
   const { user } = useAuth();
+
+  const handleUpdateScore = async () => {
+  if (!selectedMatch) return;
+  console.log('Token:', localStorage.getItem('token')); // add this
+  await api.put(`/matches/${selectedMatch.id}`, { 
+    scoreA: scoreA, 
+    scoreB: scoreB 
+  });
+  setIsOpen(false);
+};
 
   return (
     <>
@@ -112,7 +125,8 @@ const BracketView = ({ matches }: BracketViewProps) => {
                 placeholder={`${selectedMatch?.team2_name} score`}
                 type="number"
               />
-              <Button>Submit</Button>
+              <Button onClick={handleUpdateScore}>Submit</Button>
+              {scoreUpdated && <Text color="green.500">Scores updated successfully!</Text>}
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
