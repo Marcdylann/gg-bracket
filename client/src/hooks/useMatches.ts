@@ -8,10 +8,11 @@ interface UseMatchesReturn {
   error: string | null;
 }
 
-const useMatches = (): UseMatchesReturn => {
+const useMatches = (refreshKey: number): UseMatchesReturn => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -28,7 +29,7 @@ const useMatches = (): UseMatchesReturn => {
     };
 
     fetchMatches();
-  }, []);
+  }, [refreshKey]);
 
   return { matches, isLoading, error };
 };

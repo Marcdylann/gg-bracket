@@ -10,7 +10,7 @@ import {
 import { Match } from "../../types";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
-import api from '../../api/axios';
+import api from "../../api/axios";
 
 interface BracketViewProps {
   matches: Match[];
@@ -23,23 +23,23 @@ const BracketView = ({ matches }: BracketViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState<Match | null>(null);
 
-  const [scoreA, setScoreA] = useState('');
-  const [scoreB, setScoreB] = useState('');
+  const [scoreA, setScoreA] = useState("");
+  const [scoreB, setScoreB] = useState("");
 
-  const [scoreUpdated,  setScoreUpdated] = useState(false);
+  const [scoreUpdated, setScoreUpdated] = useState(false);
 
   const { user } = useAuth();
 
   const handleUpdateScore = async () => {
-  if (!selectedMatch) return;
-  console.log('Token:', localStorage.getItem('token')); // add this
-  await api.put(`/matches/${selectedMatch.id}`, { 
-    scoreA: scoreA, 
-    scoreB: scoreB 
-  });
-  setScoreUpdated(true);
-  setIsOpen(false);
-};
+    if (!selectedMatch) return;
+    console.log("Token:", localStorage.getItem("token")); // add this
+    await api.put(`/matches/${selectedMatch.id}`, {
+      scoreA: scoreA,
+      scoreB: scoreB,
+    });
+    setScoreUpdated(true);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -55,9 +55,13 @@ const BracketView = ({ matches }: BracketViewProps) => {
               mb={4}
               minW="150px"
             >
-              <Text>{match.team1_name}</Text>
+              <Text>
+                {match.team1_name} - {match.score_team_a ?? 0}
+              </Text>
               <Separator />
-              <Text>{match.team2_name}</Text>
+              <Text>
+                {match.team2_name} - {match.score_team_b ?? 0}
+              </Text>
               {user?.role === "admin" && (
                 <Button
                   mt={2}
@@ -65,6 +69,8 @@ const BracketView = ({ matches }: BracketViewProps) => {
                   onClick={() => {
                     setIsOpen(true);
                     setSelectedMatch(match);
+                    setScoreA(""); // missing from roundOne
+                    setScoreB(""); // missing from roundOne
                   }}
                 >
                   Edit Score
@@ -84,9 +90,13 @@ const BracketView = ({ matches }: BracketViewProps) => {
               mb={4}
               minW="150px"
             >
-              <Text>{match.team1_name}</Text>
+              <Text>
+                {match.team1_name} - {match.score_team_a ?? 0}
+              </Text>
               <Separator />
-              <Text>{match.team2_name}</Text>
+              <Text>
+                {match.team2_name} - {match.score_team_b ?? 0}
+              </Text>
               {user?.role === "admin" && (
                 <Button
                   mt={2}
@@ -94,6 +104,8 @@ const BracketView = ({ matches }: BracketViewProps) => {
                   onClick={() => {
                     setIsOpen(true);
                     setSelectedMatch(match);
+                    setScoreA(""); // add this
+                    setScoreB("");
                   }}
                 >
                   Edit Score
@@ -131,7 +143,9 @@ const BracketView = ({ matches }: BracketViewProps) => {
           </Dialog.Content>
         </Dialog.Positioner>
       </Dialog.Root>
-      {scoreUpdated && <Text color="green.500">Scores updated successfully!</Text>}
+      {scoreUpdated && (
+        <Text color="green.500">Scores updated successfully!</Text>
+      )}
     </>
   );
 };
