@@ -37,6 +37,7 @@ const BracketView = ({ matches }: BracketViewProps) => {
     scoreA: scoreA, 
     scoreB: scoreB 
   });
+  setScoreUpdated(true);
   setIsOpen(false);
 };
 
@@ -126,11 +127,11 @@ const BracketView = ({ matches }: BracketViewProps) => {
                 type="number"
               />
               <Button onClick={handleUpdateScore}>Submit</Button>
-              {scoreUpdated && <Text color="green.500">Scores updated successfully!</Text>}
             </Dialog.Body>
           </Dialog.Content>
         </Dialog.Positioner>
       </Dialog.Root>
+      {scoreUpdated && <Text color="green.500">Scores updated successfully!</Text>}
     </>
   );
 };
