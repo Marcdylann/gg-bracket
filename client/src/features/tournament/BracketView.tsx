@@ -14,9 +14,10 @@ import api from "../../api/axios";
 
 interface BracketViewProps {
   matches: Match[];
+  onScoreUpdate: () => void;
 }
 
-const BracketView = ({ matches }: BracketViewProps) => {
+const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
   const roundOne = matches.filter((matches) => matches.round === 1);
   const roundTwo = matches.filter((matches) => matches.round === 2);
 
@@ -29,17 +30,18 @@ const BracketView = ({ matches }: BracketViewProps) => {
   const [scoreUpdated, setScoreUpdated] = useState(false);
 
   const { user } = useAuth();
+  
 
   const handleUpdateScore = async () => {
-    if (!selectedMatch) return;
-    console.log("Token:", localStorage.getItem("token")); // add this
-    await api.put(`/matches/${selectedMatch.id}`, {
-      scoreA: scoreA,
-      scoreB: scoreB,
-    });
-    setScoreUpdated(true);
-    setIsOpen(false);
-  };
+  if (!selectedMatch) return;
+  await api.put(`/matches/${selectedMatch.id}`, {
+    scoreA: scoreA,
+    scoreB: scoreB,
+  });
+  setScoreUpdated(true);
+  onScoreUpdate(); // add this
+  setIsOpen(false);
+};
 
   return (
     <>

@@ -1,12 +1,18 @@
-import { Box, Text, Spinner } from '@chakra-ui/react';
-import useTeams from '../../hooks/useTeams';
-import useMatches from '../../hooks/useMatches';
-import TeamCard from './TeamCard';
-import BracketView from './BracketView';
+import { Box, Text, Spinner } from "@chakra-ui/react";
+import { useState } from "react";
+import useTeams from "../../hooks/useTeams";
+import useMatches from "../../hooks/useMatches";
+import TeamCard from "./TeamCard";
+import BracketView from "./BracketView";
 
 const TournamentPage = () => {
   const { teams, isLoading: teamsLoading, error: teamsError } = useTeams();
-  const { matches, isLoading: matchesLoading, error: matchesError } = useMatches();
+  const [refreshKey, setRefreshKey] = useState(0);
+  const {
+    matches,
+    isLoading: matchesLoading,
+    error: matchesError,
+  } = useMatches(refreshKey);
 
   if (teamsLoading || matchesLoading) {
     return <Spinner size="xl" />;
@@ -18,13 +24,20 @@ const TournamentPage = () => {
 
   return (
     <Box>
-      <Text fontSize="2xl" fontWeight="bold">Teams ({teams.length})</Text>
-      {teams.map(team => (
+      <Text fontSize="2xl" fontWeight="bold">
+        Teams ({teams.length})
+      </Text>
+      {teams.map((team) => (
         <TeamCard key={team.id} name={team.name} logo_url={team.logo_url} />
       ))}
 
-      <Text fontSize="2xl" fontWeight="bold" mt={6}>Matches</Text>
-      <BracketView matches={matches} />
+      <Text fontSize="2xl" fontWeight="bold" mt={6}>
+        Matches
+      </Text>
+      <BracketView
+        matches={matches}
+        onScoreUpdate={() => setRefreshKey((prev) => prev + 1)}
+      />
     </Box>
   );
 };
