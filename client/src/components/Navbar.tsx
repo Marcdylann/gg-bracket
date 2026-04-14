@@ -1,9 +1,10 @@
 import { Text, Flex, Button } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <Flex justify="space-between" align="center" p={4} bg="gray.900">
@@ -16,7 +17,7 @@ const Navbar = () => {
       </Flex>
 
       <Flex>
-        {user && <Button onClick={logout}>Logout</Button>}
+        {user && <Button onClick = {()=>{logout(); navigate('login');}}>Logout</Button>}
       </Flex>
     </Flex>
   );
