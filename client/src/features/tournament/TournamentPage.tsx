@@ -14,7 +14,7 @@ const TournamentPage = () => {
     error: matchesError,
   } = useMatches(refreshKey);
 
-  if (teamsLoading || matchesLoading) {
+  if (teamsLoading || matchesLoading && refreshKey === 0) {
     return <Spinner size="xl" />;
   }
 

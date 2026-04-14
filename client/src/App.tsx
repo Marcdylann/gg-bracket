@@ -2,11 +2,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './features/auth/Login';
 import { AuthProvider } from './context/AuthContext'; // Make sure this is here!
 import TournamentPage from './features/tournament/TournamentPage'
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <Navbar/>
         <Routes>
           {/* This is the "Doorway" to your login page */}
           <Route path="/login" element={<Login />} />
