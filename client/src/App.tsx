@@ -3,6 +3,9 @@ import { Login } from './features/auth/Login';
 import { AuthProvider } from './context/AuthContext'; // Make sure this is here!
 import TournamentPage from './features/tournament/TournamentPage'
 import Navbar from './components/Navbar';
+import TeamPage from './features/teams/TeamsPage';
+import MatchesPage from './features/matches/MatchesPage';
+import StandingsPage from './features/standings/StandingsPage';
 
 function App() {
   return (
@@ -14,7 +17,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           
           {/* Your main bracket/home page route */}
+          <Route path="/teams" element={<TeamPage />} />
           <Route path="/" element={<TournamentPage />} />
+          <Route path="/matches" element={<MatchesPage />} />
+          <Route path="/standings" element={<StandingsPage />} />
         </Routes>
       </Router>
     </AuthProvider>

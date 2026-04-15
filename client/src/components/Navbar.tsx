@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <Flex justify="space-between" align="center" p={4} bg="gray.900">
-      <Text fontWeight="bold" fontSize="2xl">GG Bracket</Text>
+      <Link to ="/">GG Bracket</Link>
       
       <Flex gap={6}>
         <Link to="/matches">Matches</Link>
