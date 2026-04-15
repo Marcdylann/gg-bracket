@@ -1,7 +1,6 @@
 import { Text, Spinner, Box } from "@chakra-ui/react";
 import useMatches from "../../hooks/useMatches";
 import { useState } from "react";
-import BracketView from "../tournament/bracketView";
 
 const MatchesPage = () => {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -20,16 +19,18 @@ const MatchesPage = () => {
   }
 
   return (
-    <Box>
-      <Text fontSize="2xl" fontWeight="bold" mt={6}>
-        Matches
-      </Text>
-      <BracketView
-        matches={matches}
-        onScoreUpdate={() => setRefreshKey((prev) => prev + 1)}
-      />
-    </Box>
+    <Box p={8}>
+    <Text fontSize="2xl" fontWeight="bold">Matches</Text>
+    {matches.map((match) => (
+      <Box key={match.id} border="1px solid gray" borderRadius="md" p={4} mb={4}>
+        <Text>Round {match.round}</Text>
+        <Text>{match.team1_name} vs {match.team2_name}</Text>
+        <Text>Score: {match.score_team_a ?? 0} - {match.score_team_b ?? 0}</Text>
+        <Text>Status: {match.status}</Text>
+      </Box>
+    ))}
+  </Box>
   );
 };
 
-export default MatchesPage;
+export default MatchesPage
