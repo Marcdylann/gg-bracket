@@ -11,6 +11,7 @@ import { Match } from "../../types";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import api from "../../api/axios";
+import { toaster } from "../../components/ui/toaster";
 
 interface BracketViewProps {
   matches: Match[];
@@ -36,7 +37,10 @@ const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
       scoreA: scoreA,
       scoreB: scoreB,
     });
-    setScoreUpdated(true);
+    toaster.create({
+      title: "Score updated successfully!",
+      type: "success",
+    });
     onScoreUpdate(); // add this
     setIsOpen(false);
   };
@@ -74,6 +78,7 @@ const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
                         setSelectedMatch(match);
                         setScoreA("");
                         setScoreB("");
+                        setScoreUpdated(false);
                       }}
                     >
                       Edit Score
