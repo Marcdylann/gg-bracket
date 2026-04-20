@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 
 interface TeamCardProps {
   name: string;
@@ -18,14 +18,19 @@ const TeamCard = ({ name, logo_url }: TeamCardProps) => {
         boxShadow: "lg",
       }}
     >
-      <Text>{name}</Text>
-      {logo_url && (
-        <img
-          src={logo_url}
-          alt={name}
-          onError={(e) => (e.currentTarget.style.display = "none")}
-        />
-      )}
+      <Flex align="center" gap={4}>
+        <Text>{name}</Text>
+        {logo_url && (
+          <img
+            width="50px"
+            height="50px"
+            style={{ objectFit: "contain" }}
+            src={logo_url}
+            alt={name}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+        )}
+      </Flex>
     </Box>
   );
 };
