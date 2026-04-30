@@ -24,6 +24,22 @@ const getAllMatches = async (req, res) => {
   }
 };
 
+const updateStatus = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const {status} = req.body;
+
+    const result = await pool.query(
+      "UPDATE matches SET status = $1 WHERE id = $2",
+      [status, id]
+    );
+    res.json({ message: 'Status updated' })
+  } catch (error) {
+    console.error('Error updating status:', error);
+    res.status(500).json({ message: 'Server error updating status' });
+  }
+}
+
 const updateScore = async (req, res) => {
   try {
 
@@ -42,4 +58,4 @@ const updateScore = async (req, res) => {
   }
 };
 
-module.exports = { getAllMatches, updateScore };
+module.exports = { getAllMatches, updateScore, updateStatus };
