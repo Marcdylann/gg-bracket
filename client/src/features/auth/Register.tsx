@@ -10,6 +10,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [hidden, setHidden] = useState(true);
 
   const handleRegister = async () => {
     if (password != confirmPassword) {
