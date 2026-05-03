@@ -45,6 +45,12 @@ const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
     setIsOpen(false);
   };
 
+  const handleStatusUpdate = async (match: Match) => {
+    const nextStatus = match.status === "Scheduled" ? "Live" : "Final";
+    await api.put(`/matches/${match.id}/status`, { status: nextStatus });
+    onScoreUpdate();
+  };
+
   return (
     <>
       <Flex gap="8">
@@ -69,7 +75,10 @@ const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
                   <Text>
                     {match.team2_name} - {match.score_team_b ?? 0}
                   </Text>
+
+                  <Text fontSize="xs">{match.status}</Text>
                   {user?.role === "admin" && (
+                    
                     <Button
                       mt={2}
                       size="sm"
@@ -82,6 +91,18 @@ const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
                       }}
                     >
                       Edit Score
+                    </Button>
+                  )}
+                  {user?.role === "admin" && match.status !== "Final" && (
+                    <Button
+                      mt={2}
+                      size="sm"
+                      onClick={() => handleStatusUpdate(match)}
+                    >
+                      {" "}
+                      {match.status === "Scheduled"
+                        ? "Start Match"
+                        : "End Match"}{" "}
                     </Button>
                   )}
                 </Box>
