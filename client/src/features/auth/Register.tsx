@@ -1,4 +1,4 @@
-import { Box, Button, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Input, Field, Heading, Stack, Container, Text } from "@chakra-ui/react"
 import { useState } from "react";
 import api from "../../api/axios";
 import {useNavigate } from "react-router-dom";
@@ -23,16 +23,15 @@ const Register = () => {
   };
 
   return (
+    <Container maxW="md" py={20} >
     <Box
-      maxW="400px"
-      mx="auto"
-      mt={10}
       p={8}
-      border="1px solid gray"
+      border="1px solid"
       borderRadius="lg"
+      borderColor="border.subtle"
     >
       {error && <Text color="red.500">{error}</Text>}
-      <Text>Register</Text>
+      <Heading size="xl" textAlign="center">Register User</Heading>
       <Input
         placeholder="username"
         value={username}
@@ -63,6 +62,7 @@ const Register = () => {
 
       <Button onClick={handleRegister}>Submit</Button>
     </Box>
+    </Container>
   );
 };
 
