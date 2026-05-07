@@ -18,6 +18,12 @@ interface BracketViewProps {
   onScoreUpdate: () => void;
 }
 
+const statusColor = (status: string) => {
+  if (status === "Live") return "red.500";
+  if (status === "Final") return "green.500";
+  return "gray.500";
+};
+
 const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
   const rounds = [...new Set(matches.map((m) => m.round))];
 
@@ -62,48 +68,72 @@ const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
               .map((match) => (
                 <Box
                   key={match.id}
-                  border="1px solid gray"
+                  border="1px solid"
+                  borderColor="whiteAlpha.200"
+                  borderLeft="4px solid"
+                  borderLeftColor={statusColor(match.status)}
                   borderRadius="md"
                   p={4}
-                  mb={4}
-                  minW="150px"
+                  mb={6}
+                  minW="180px"
+                  bg="whiteAlpha.50"
                 >
-                  <Text>
+                  <Text
+                    fontWeight={
+                      match.status === "Final" &&
+                      (match.score_team_a ?? 0) > (match.score_team_b ?? 0)
+                        ? "bold"
+                        : "normal"
+                    }
+                  >
                     {match.team1_name} - {match.score_team_a ?? 0}
                   </Text>
                   <Separator />
-                  <Text>
+                  <Text
+                    fontWeight={
+                      match.status === "Final" &&
+                      (match.score_team_b ?? 0) > (match.score_team_a ?? 0)
+                        ? "bold"
+                        : "normal"
+                    }
+                  >
                     {match.team2_name} - {match.score_team_b ?? 0}
                   </Text>
 
-                  <Text fontSize="xs">{match.status}</Text>
+                  <Text
+                    fontSize="xs"
+                    fontWeight="semibold"
+                    color={statusColor(match.status)}
+                    mt={2}
+                  >
+                    {match.status}
+                  </Text>
+
                   {user?.role === "admin" && (
-                    
-                    <Button
-                      mt={2}
-                      size="sm"
-                      onClick={() => {
-                        setIsOpen(true);
-                        setSelectedMatch(match);
-                        setScoreA("");
-                        setScoreB("");
-                        setScoreUpdated(false);
-                      }}
-                    >
-                      Edit Score
-                    </Button>
-                  )}
-                  {user?.role === "admin" && match.status !== "Final" && (
-                    <Button
-                      mt={2}
-                      size="sm"
-                      onClick={() => handleStatusUpdate(match)}
-                    >
-                      {" "}
-                      {match.status === "Scheduled"
-                        ? "Start Match"
-                        : "End Match"}{" "}
-                    </Button>
+                    <Flex gap={2} mt={3}>
+                      <Button
+                        size="sm"
+                        onClick={() => {
+                          setIsOpen(true);
+                          setSelectedMatch(match);
+                          setScoreA("");
+                          setScoreB("");
+                          setScoreUpdated(false);
+                        }}
+                      >
+                        Edit Score
+                      </Button>
+                      {match.status !== "Final" && (
+                        <Button
+                          size="sm"
+                          onClick={() => handleStatusUpdate(match)}
+                        >
+                          {match.status === "Scheduled"
+                            ? "Start Match"
+                            : "End Match"}
+                        </Button>
+                      )}
+                    </Flex>
                   )}
                 </Box>
               ))}
