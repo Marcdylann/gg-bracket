@@ -3,7 +3,7 @@ import { useState } from "react";
 import useTeams from "../../hooks/useTeams";
 import useMatches from "../../hooks/useMatches";
 import TeamCard from "./TeamCard";
-import BracketView from "./BracketView";
+import BracketView from "../tournament/bracketView";
 
 const TournamentPage = () => {
   const { teams, isLoading: teamsLoading, error: teamsError } = useTeams();

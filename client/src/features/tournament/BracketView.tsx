@@ -12,17 +12,12 @@ import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import api from "../../api/axios";
 import { toaster } from "../../components/ui/toaster";
+import statusColor from "../../utils/statusColors";
 
 interface BracketViewProps {
   matches: Match[];
   onScoreUpdate: () => void;
 }
-
-const statusColor = (status: string) => {
-  if (status === "Live") return "red.500";
-  if (status === "Final") return "green.500";
-  return "gray.500";
-};
 
 const BracketView = ({ matches, onScoreUpdate }: BracketViewProps) => {
   const rounds = [...new Set(matches.map((m) => m.round))];
